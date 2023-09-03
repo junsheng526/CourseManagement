@@ -1,32 +1,28 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package dao;
-
-import adt.*;
-import entity.Programme;
 
 /**
  *
- * @author NITRO 5
+ * @author Deong Yue Jiaz
  */
+import adt.*;
+import entity.*;
+
 public class CourseInitializer {
 
-    public ListInterface<Programme> initializeProgrammes() {
-        ListInterface<Programme> programmeList = new ArrayList<>();
-        programmeList.add(new Programme("P1001", "Computer Science"));
-        programmeList.add(new Programme("P1002", "Engineering"));
-        programmeList.add(new Programme("P1003", "Business Administration"));
-        // Add more programmes here
-        
-        return programmeList;
+    public SortedListInterface<Course> initializeCourses() {
+        SortedListInterface<Course> courseList = new SortedArrayList<>(); // Initialize your SortedArrayList
+        courseList.add(new Course("C1001", "FOCS", "Computer Science", 5, "Active"));
+        courseList.add(new Course("C1002", "FOET", "Engineering", 5, "Active"));
+        courseList.add(new Course("C1003", "FAFB", "Business Administration", 5, "Active"));
+        // Add more courses here
+
+        return courseList;
     }
 
     public static void main(String[] args) {
-        // To illustrate how to use the initializeProgrammes() method
-        CourseInitializer p = new CourseInitializer();
-        ListInterface<Programme> programmeList = p.initializeProgrammes();
-        System.out.println("\nProgrammes:\n" + programmeList);
+        // To illustrate how to use the initializeCourses() method
+        CourseInitializer courseInitializer = new CourseInitializer();
+        SortedListInterface<Course> courseList = courseInitializer.initializeCourses();
+        System.out.println("\nCourses:\n" + courseList);
     }
 }

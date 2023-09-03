@@ -1,21 +1,22 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package dao;
 
-import adt.*;
-import entity.Programme;
+/**
+ *
+ * @author Deong Yue Jiaz
+ */
+import entity.*;
 import java.io.*;
+import adt.*; // Import your SortedArrayList class
 
 public class CourseDAO {
-    private String fileName = "programmes.dat"; // Change the filename as needed
 
-    public void saveToFile(ListInterface<Programme> programmeList) {
+    private String fileName = "courses.dat"; // Change the filename as needed
+
+    public void saveToFile(SortedArrayList<Course> courseList) {
         File file = new File(fileName);
         try {
             ObjectOutputStream ooStream = new ObjectOutputStream(new FileOutputStream(file));
-            ooStream.writeObject(programmeList);
+            ooStream.writeObject(courseList);
             ooStream.close();
         } catch (FileNotFoundException ex) {
             System.out.println("\nFile not found");
@@ -24,12 +25,12 @@ public class CourseDAO {
         }
     }
 
-    public ListInterface<Programme> retrieveFromFile() {
+    public SortedArrayList<Course> retrieveFromFile() {
         File file = new File(fileName);
-        ListInterface<Programme> programmeList = new ArrayList<>();
+        SortedArrayList<Course> courseList = new SortedArrayList<>(); // Initialize your SortedArrayList
         try {
             ObjectInputStream oiStream = new ObjectInputStream(new FileInputStream(file));
-            programmeList = (ArrayList<Programme>) (oiStream.readObject());
+            courseList = (SortedArrayList<Course>) (oiStream.readObject());
             oiStream.close();
         } catch (FileNotFoundException ex) {
             System.out.println("\nNo such file.");
@@ -38,7 +39,7 @@ public class CourseDAO {
         } catch (ClassNotFoundException ex) {
             System.out.println("\nClass not found.");
         } finally {
-            return programmeList;
+            return courseList;
         }
     }
 }
