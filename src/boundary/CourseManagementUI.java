@@ -16,9 +16,9 @@ public class CourseManagementUI {
 
     public int getMenuChoice() {
         System.out.println("\n");
-        printLine(28);
+        printLine(35);
         System.out.println("COURSE MANAGEMENT MENU");
-        printLine(28);
+        printLine(35);
         System.out.println("1. Add Course");
         System.out.println("2. Remove Course");
         System.out.println("3. Find Course");
@@ -26,9 +26,10 @@ public class CourseManagementUI {
         System.out.println("5. List All Courses");
         System.out.println("6. Add Programme to Course");
         System.out.println("7. Remove Programme from Course");
-        System.out.println("8. Generate Reports");
+        System.out.println("8. List All Programmes By Course");
+        System.out.println("9. Generate Report");
         System.out.println("0. Quit");
-        printLine(28);
+        printLine(35);
         System.out.print("Please enter your choice: ");
         int choice = -1;
         try {
@@ -56,11 +57,19 @@ public class CourseManagementUI {
     }
 
     public void listAllCourses(String outputStr) {
-        printLine(112);
-        System.out.printf("%-10s %-15s %-40s %-15s %-15s %-15s\n", "Course Code", "Category", "Name", "Credit Hours", "Status", "Date Added");
-        printLine(112);
+        printLine(130);
+        System.out.printf("%-10s %-15s %-40s %-15s %-15s %-15s %-15s\n", "Course Code", "Category", "Name", "Credit Hours", "Status", "Date Added", "Programmes");
+        printLine(130);
         System.out.print(outputStr);
-        printLine(112);
+        printLine(130);
+    }
+
+    public void listAllProgrammesByCourse(String outputStr) {
+        printLine(70);
+        System.out.printf("%-20s %-50s\n", "Programme Code", "Name");
+        printLine(70);
+        System.out.print(outputStr);
+        printLine(70);
     }
 
     public Course inputCourseDetails() {
@@ -92,14 +101,23 @@ public class CourseManagementUI {
         return new Course(courseCode, category, name, creditHours, status);
     }
 
-    public String inputCourseCode() {
-        System.out.print("Enter course code: ");
-        String code = scanner.nextLine();
-        return code;
+    public Programme inputProgrammeDetails() {
+        System.out.print("Enter programme code: ");
+        String programmeCode = scanner.nextLine();
+        System.out.print("Enter programme name: ");
+        String name = scanner.nextLine();
+
+        return new Programme(programmeCode, name);
     }
 
     public String inputProgrammeCode() {
         System.out.print("Enter programme code: ");
+        String code = scanner.nextLine();
+        return code;
+    }
+
+    public String inputCourseCode() {
+        System.out.print("Enter course code: ");
         String code = scanner.nextLine();
         return code;
     }

@@ -4,6 +4,7 @@ package entity;
  *
  * @author Deong Yue Jiaz
  */
+import adt.SortedArrayList;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.Objects;
@@ -12,14 +13,41 @@ public class Course implements Comparable<Course>, Serializable {
 
     private CourseInfo course;
     private LocalDate dateAdded;
+    private SortedArrayList<Programme> programmes = new SortedArrayList<>();
 
     public Course() {
-
+        programmes = new SortedArrayList<>();
     }
 
     public Course(String courseCode, String category, String name, int creditHours, String status) {
         this.course = new CourseInfo(courseCode, category, name, creditHours, status);
         this.dateAdded = LocalDate.now();
+        this.programmes = new SortedArrayList<>();
+    }
+
+    public void addProgramme(Programme programme) {
+        programmes.add(programme);
+    }
+
+    public boolean removeProgramme(Programme programme) {
+        return programmes.remove(programme);
+    }
+
+    public SortedArrayList<Programme> getProgrammes() {
+        return programmes;
+    }
+
+    public int getProgrammeCount() {
+        return programmes.totalNumberOfObject();
+    }
+
+    public String listAllProgrammesByCourse() {
+        StringBuilder outputStr = new StringBuilder();
+        for (int i = 0; i < programmes.totalNumberOfObject(); i++) {
+            Programme programme = programmes.getObject(i);
+            outputStr.append(programme.toString()).append("\n");
+        }
+        return outputStr.toString();
     }
 
     public CourseInfo getCourseInfo() {
@@ -38,8 +66,6 @@ public class Course implements Comparable<Course>, Serializable {
         this.dateAdded = dateAdded;
     }
 
-    // get positive int when true, get negative integer when false
-    // so course A < course B, sequence will be >> A,B
     @Override
     public int compareTo(Course T) {
         return this.course.getCourseCode().compareTo(T.getCourseInfo().getCourseCode());
@@ -69,6 +95,6 @@ public class Course implements Comparable<Course>, Serializable {
 
     @Override
     public String toString() {
-        return String.format("%-100s %-15s", course.toString(), dateAdded);
+        return String.format("%-100s %-15s %-15d", course.toString(), dateAdded, getProgrammeCount());
     }
 }

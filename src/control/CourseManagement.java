@@ -8,12 +8,13 @@ import adt.*;
 import boundary.CourseManagementUI;
 import dao.CourseDAO;
 import entity.Course;
+import entity.Programme;
 import utility.MessageUI;
 
 public class CourseManagement {
 
     private SortedArrayList<Course> courseList = new SortedArrayList<>();
-    private CourseManagementUI courseUI = new CourseManagementUI();
+    private final CourseManagementUI courseUI = new CourseManagementUI();
     private CourseDAO courseDAO = new CourseDAO();
 
     public CourseManagement() {
@@ -47,6 +48,8 @@ public class CourseManagement {
                 case 7 ->
                     removeProgrammeFromCourse();
                 case 8 ->
+                    listAllProgrammesByCourse();
+                case 9 ->
                     generateReports();
                 default ->
                     MessageUI.displayInvalidChoiceMessage();
@@ -97,13 +100,44 @@ public class CourseManagement {
     }
 
     public void addProgrammeToCourse() {
-        // Implement adding a programme to a course
-        // This functionality will depend on your specific requirements
+        String courseCode = courseUI.inputCourseCode();
+        Course course = findCourseByCode(courseCode);
+        if (course != null) {
+            Programme newProgramme = courseUI.inputProgrammeDetails(); // Implement inputProgrammeDetails in your UI class
+            course.addProgramme(newProgramme);
+            courseDAO.saveToFile(courseList);
+            courseUI.displayMessage("Programme added to the course.");
+        } else {
+            courseUI.displayMessage("Course not found.");
+        }
     }
 
     public void removeProgrammeFromCourse() {
-        // Implement removing a programme from a course
-        // This functionality will depend on your specific requirements
+        String courseCode = courseUI.inputCourseCode();
+        Course course = findCourseByCode(courseCode);
+        if (course != null) {
+            String programmeCode = courseUI.inputProgrammeCode();
+            Programme programme = findProgrammeByCode(course, programmeCode);
+            if (programme != null) {
+                course.getProgrammes().remove(programme);
+                courseDAO.saveToFile(courseList);
+                courseUI.displayMessage("Programme removed from the course.");
+            } else {
+                courseUI.displayMessage("Programme not found in the course.");
+            }
+        } else {
+            courseUI.displayMessage("Course not found.");
+        }
+    }
+    
+    public Programme findProgrammeByCode(Course course, String programmeCode) {
+        for (int i = 0; i < course.getProgrammes().totalNumberOfObject(); i++) {
+            Programme programme = course.getProgrammes().getObject(i);
+            if (programme.getProgrammeCode().equals(programmeCode)) {
+                return programme;
+            }
+        }
+        return null;
     }
 
     public void generateReports() {
@@ -111,6 +145,7 @@ public class CourseManagement {
         // This functionality will depend on the reports you need to generate
     }
 
+    // Find Course By Code can reuse in update details also
     private Course findCourseByCode(String courseCode) {
         for (int i = 0; i < courseList.totalNumberOfObject(); i++) {
             Course course = courseList.getObject(i);
@@ -128,6 +163,21 @@ public class CourseManagement {
             outputStr.append(course.toString()).append("\n");
         }
         return outputStr.toString();
+    }
+
+    public void listAllProgrammesByCourse() {
+        String courseCode = courseUI.inputCourseCode();
+        Course course = findCourseByCode(courseCode);
+        if (course != null) {
+            String programs = course.listAllProgrammesByCourse();
+            if (!programs.isEmpty()) {
+                courseUI.listAllProgrammesByCourse(programs);
+            } else {
+                courseUI.displayMessage("No programs found for Course " + courseCode);
+            }
+        } else {
+            courseUI.displayMessage("Course not found.");
+        }
     }
 
     public static void main(String[] args) {

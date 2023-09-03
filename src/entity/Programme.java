@@ -6,25 +6,25 @@ package entity;
  */
 import java.io.Serializable;
 
-public class Programme implements Serializable {
+public class Programme implements Comparable<Programme>, Serializable {
 
-    private String code;
+    private String programmeCode;
     private String name;
 
     public Programme() {
     }
 
-    public Programme(String code, String name) {
-        this.code = code;
+    public Programme(String programmeCode, String name) {
+        this.programmeCode = programmeCode;
         this.name = name;
     }
 
-    public String getCode() {
-        return code;
+    public String getProgrammeCode() {
+        return programmeCode;
     }
 
-    public void setCode(String code) {
-        this.code = code;
+    public void setProgrammeCode(String programmeCode) {
+        this.programmeCode = programmeCode;
     }
 
     public String getName() {
@@ -36,7 +36,12 @@ public class Programme implements Serializable {
     }
 
     @Override
+    public int compareTo(Programme T) {
+        return this.getProgrammeCode().compareTo(T.getProgrammeCode());
+    }
+
+    @Override
     public String toString() {
-        return String.format(" %-20s %-50s", code, name);
+        return String.format("%-20s %-50s", programmeCode, name);
     }
 }
