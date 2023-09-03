@@ -16,6 +16,8 @@ public class CourseManagement {
     private SortedArrayList<Course> courseList = new SortedArrayList<>();
     private final CourseManagementUI courseUI = new CourseManagementUI();
     private CourseDAO courseDAO = new CourseDAO();
+    
+    int add = 0, remove = 0, edit = 0;
 
     public CourseManagement() {
         courseList = courseDAO.retrieveFromFile();
@@ -32,15 +34,20 @@ public class CourseManagement {
                     addNewCourse();
                     courseUI.listAllCourses(getAllCourses());
                     courseUI.displayMessage("New course added.");
+                    add++;
                 }
                 case 2 -> {
                     removeCourse();
                     courseUI.listAllCourses(getAllCourses());
+                    remove++;
                 }
                 case 3 ->
                     findCourse();
-                case 4 ->
+                case 4 ->{
                     amendCourseDetails();
+                    courseUI.listAllCourses(getAllCourses());
+                    edit++;
+                }   
                 case 5 ->
                     courseUI.listAllCourses(getAllCourses());
                 case 6 ->
@@ -141,8 +148,9 @@ public class CourseManagement {
     }
 
     public void generateReports() {
-        // Implement generating relevant reports
-        // This functionality will depend on the reports you need to generate
+        courseUI.listAllCourses(getAllCourses());
+        int totalCourse = courseList.totalNumberOfObject();
+        courseUI.displayCourseManagementReport(totalCourse, add, remove, edit);
     }
 
     // Find Course By Code can reuse in update details also

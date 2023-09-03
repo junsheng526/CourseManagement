@@ -131,4 +131,25 @@ public class CourseManagementUI {
     public void displayMessage(String message) {
         System.out.println(message);
     }
+
+    public void displayCourseManagementReport(int totalCourses, int add, int remove, int edit) {
+        clearScreen(); // Clear the console screen (optional)
+
+        System.out.println("=== Course Management Report ===");
+        System.out.println("Total Number of Courses             >> " + totalCourses);
+        System.out.println("Total Number of Programmes Added    >> " + add);
+        System.out.println("Total Number of Programmes Deleted  >> " + remove);
+        System.out.println("Total Number of Programmes Edited   >> " + edit);
+        System.out.println("================================");
+
+        // Wait for user input before proceeding
+        System.out.print("Enter any value to proceed -> ");
+        scanner.next();
+    }
+
+    private void clearScreen() {
+        // This method clears the console screen (you can customize it or skip it)
+        System.out.print("\033[H\033[2J");
+        System.out.flush();
+    }
 }
