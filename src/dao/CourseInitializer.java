@@ -23,7 +23,6 @@ public class CourseInitializer {
     }
 
     public static void main(String[] args) {
-        // To illustrate how to use the initializeCourses() method
         CourseInitializer courseInitializer = new CourseInitializer();
         SortedListInterface<Course> courseList = courseInitializer.initializeCourses();
         System.out.println("\nCourses:\n" + courseList);

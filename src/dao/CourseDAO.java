@@ -6,11 +6,11 @@ package dao;
  */
 import entity.*;
 import java.io.*;
-import adt.*; // Import your SortedArrayList class
+import adt.*;
 
 public class CourseDAO {
 
-    private String fileName = "courses.dat"; // Change the filename as needed
+    private String fileName = "courses.dat";
 
     public void saveToFile(SortedArrayList<Course> courseList) {
         File file = new File(fileName);
@@ -27,7 +27,7 @@ public class CourseDAO {
 
     public SortedArrayList<Course> retrieveFromFile() {
         File file = new File(fileName);
-        SortedArrayList<Course> courseList = new SortedArrayList<>(); // Initialize your SortedArrayList
+        SortedArrayList<Course> courseList = new SortedArrayList<>();
         try {
             ObjectInputStream oiStream = new ObjectInputStream(new FileInputStream(file));
             courseList = (SortedArrayList<Course>) (oiStream.readObject());

@@ -110,7 +110,7 @@ public class CourseManagement {
         String courseCode = courseUI.inputCourseCode();
         Course course = findCourseByCode(courseCode);
         if (course != null) {
-            Programme newProgramme = courseUI.inputProgrammeDetails(); // Implement inputProgrammeDetails in your UI class
+            Programme newProgramme = courseUI.inputProgrammeDetails();
             course.addProgramme(newProgramme);
             courseDAO.saveToFile(courseList);
             courseUI.displayMessage("Programme added to the course.");

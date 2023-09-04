@@ -4,8 +4,6 @@ package boundary;
  *
  * @author Deong Yue Jiaz
  */
-// Ctrl + Shift + I = Organize import
-// Alt + Shift + F = Format code
 import entity.*;
 import java.util.InputMismatchException;
 import java.util.Scanner;
@@ -39,11 +37,11 @@ public class CourseManagementUI {
             }
         } catch (InputMismatchException e) {
             System.out.println("Invalid input. Please enter a valid number.");
-            scanner.nextLine(); // Clear the invalid input
+            scanner.nextLine();
         }
 
-        scanner.nextLine(); // Consume the newline left in the buffer
-        System.out.println(); // Add a blank line after input
+        scanner.nextLine();
+        System.out.println();
 
         return choice;
     }
@@ -133,7 +131,7 @@ public class CourseManagementUI {
     }
 
     public void displayCourseManagementReport(int totalCourses, int add, int remove, int edit) {
-        clearScreen(); // Clear the console screen (optional)
+        clearScreen();
 
         System.out.println("=== Course Management Report ===");
         System.out.println("Total Number of Courses             >> " + totalCourses);
@@ -148,7 +146,6 @@ public class CourseManagementUI {
     }
 
     private void clearScreen() {
-        // This method clears the console screen (you can customize it or skip it)
         System.out.print("\033[H\033[2J");
         System.out.flush();
     }
