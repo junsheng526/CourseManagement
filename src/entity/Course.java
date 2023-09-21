@@ -2,7 +2,7 @@ package entity;
 
 /**
  *
- * @author Deong Yue Jiaz
+ * @author Kai Xin
  */
 import adt.SortedArrayList;
 import java.io.Serializable;

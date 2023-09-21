@@ -2,10 +2,10 @@ package adt;
 
 /**
  *
- * @author Deong Yue Jiaz
+ * @author Kai Xin
  * @param <T>
  */
-public interface SortedListInterface<T extends Comparable<T>> {
+public interface ListInterface<T extends Comparable<T>> {
 
     public boolean add(T newObject); //add new object
 

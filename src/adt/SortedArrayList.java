@@ -4,10 +4,10 @@ import java.io.Serializable;
 
 /**
  *
- * @author Deong Yue Jiaz
+ * @author Kai Xin
  * @param <T>
  */
-public class SortedArrayList<T extends Comparable<T>> implements SortedListInterface<T>, Serializable {
+public class SortedArrayList<T extends Comparable<T>> implements ListInterface<T>, Serializable {
 
     private T[] array;
     private int totalObject;

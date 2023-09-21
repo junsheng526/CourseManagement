@@ -2,7 +2,7 @@ package dao;
 
 /**
  *
- * @author Deong Yue Jiaz
+ * @author Kai Xin
  */
 import entity.*;
 import java.io.*;

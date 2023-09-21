@@ -2,15 +2,15 @@ package dao;
 
 /**
  *
- * @author Deong Yue Jiaz
+ * @author Kai Xin
  */
 import adt.*;
 import entity.*;
 
 public class CourseInitializer {
 
-    public SortedListInterface<Course> initializeCourses() {
-        SortedListInterface<Course> courseList = new SortedArrayList<>(); // Initialize your SortedArrayList
+    public ListInterface<Course> initializeCourses() {
+        ListInterface<Course> courseList = new SortedArrayList<>(); // Initialize your SortedArrayList
         courseList.add(new Course("BACS1013", "FOCS", "PROBLEM SOLVING AND PROGRAMMING", 3, "ACTIVE"));
         courseList.add(new Course("BACS2023", "FOCS", "OBJECT-ORIENTED PROGRAMMING", 3, "ACTIVE"));
         courseList.add(new Course("BHEL1013", "FCCI", "ENGLISH LANGUAGE", 3, "ACTIVE"));
@@ -24,7 +24,7 @@ public class CourseInitializer {
 
     public static void main(String[] args) {
         CourseInitializer courseInitializer = new CourseInitializer();
-        SortedListInterface<Course> courseList = courseInitializer.initializeCourses();
+        ListInterface<Course> courseList = courseInitializer.initializeCourses();
         System.out.println("\nCourses:\n" + courseList);
     }
 }

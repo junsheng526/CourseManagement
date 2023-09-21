@@ -4,7 +4,7 @@ import java.io.Serializable;
 
 /**
  *
- * @author Deong Yue Jiaz
+ * @author Kai Xin
  */
 public class CourseInfo implements Serializable {
 

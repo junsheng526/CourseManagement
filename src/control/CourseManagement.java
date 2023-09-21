@@ -2,7 +2,7 @@ package control;
 
 /**
  *
- * @author Deong Yue Jiaz
+ * @author Kai Xin
  */
 import adt.*;
 import boundary.CourseManagementUI;
@@ -15,7 +15,7 @@ public class CourseManagement {
 
     private SortedArrayList<Course> courseList = new SortedArrayList<>();
     private final CourseManagementUI courseUI = new CourseManagementUI();
-    private CourseDAO courseDAO = new CourseDAO();
+    private final CourseDAO courseDAO = new CourseDAO();
     
     int add = 0, remove = 0, edit = 0;
 
@@ -24,7 +24,7 @@ public class CourseManagement {
     }
 
     public void runCourseManagement() {
-        int choice = 0;
+        int choice;
         do {
             choice = courseUI.getMenuChoice();
             switch (choice) {
@@ -76,9 +76,9 @@ public class CourseManagement {
         if (course != null) {
             courseList.remove(course);
             courseDAO.saveToFile(courseList);
-            courseUI.displayMessage("Course removed.");
+            MessageUI.removeCourseSuccessMessage();
         } else {
-            courseUI.displayMessage("Course not found.");
+            MessageUI.courseNotFoundMessage();
         }
     }
 
@@ -88,7 +88,7 @@ public class CourseManagement {
         if (course != null) {
             courseUI.displayCourseDetails(course);
         } else {
-            courseUI.displayMessage("Course not found.");
+            MessageUI.courseNotFoundMessage();
         }
     }
 
@@ -100,9 +100,9 @@ public class CourseManagement {
             Course newCourseDetails = courseUI.inputCourseDetails();
             courseList.replace(course, newCourseDetails);
             courseDAO.saveToFile(courseList);
-            courseUI.displayMessage("Course details amended.");
+            MessageUI.updateCourseSuccessMessage();
         } else {
-            courseUI.displayMessage("Course not found.");
+            MessageUI.courseNotFoundMessage();
         }
     }
 
@@ -113,9 +113,9 @@ public class CourseManagement {
             Programme newProgramme = courseUI.inputProgrammeDetails();
             course.addProgramme(newProgramme);
             courseDAO.saveToFile(courseList);
-            courseUI.displayMessage("Programme added to the course.");
+            MessageUI.addProgrammeSuccessMessage();
         } else {
-            courseUI.displayMessage("Course not found.");
+            MessageUI.courseNotFoundMessage();
         }
     }
 
@@ -128,12 +128,12 @@ public class CourseManagement {
             if (programme != null) {
                 course.getProgrammes().remove(programme);
                 courseDAO.saveToFile(courseList);
-                courseUI.displayMessage("Programme removed from the course.");
+                MessageUI.removeProgrammeSuccessMessage();
             } else {
-                courseUI.displayMessage("Programme not found in the course.");
+                MessageUI.programmeNotFoundMessage();
             }
         } else {
-            courseUI.displayMessage("Course not found.");
+            MessageUI.courseNotFoundMessage();
         }
     }
     
@@ -184,7 +184,7 @@ public class CourseManagement {
                 courseUI.displayMessage("No programs found for Course " + courseCode);
             }
         } else {
-            courseUI.displayMessage("Course not found.");
+            MessageUI.courseNotFoundMessage();
         }
     }
 
