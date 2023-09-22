@@ -2,7 +2,7 @@ package boundary;
 
 /**
  *
- * @author Deong Yue Jiaz
+ * @author Kai Xin
  */
 import entity.*;
 import java.util.InputMismatchException;
@@ -70,13 +70,49 @@ public class CourseManagementUI {
         printLine(70);
     }
 
+    private boolean isValidCourseCode(String code) {
+        return code.matches("B[A-Z]{3}\\d{4}");
+    }
+
+    private boolean isValidCourseCategory(String code) {
+        return code.matches("^F[A-Z]{3}$");
+    }
+
+    private boolean isValidProgrammeCode(String code) {
+        return code.matches("^R[A-Z]{2}Y\\d{1}S\\d{1}$");
+    }
+
     public Course inputCourseDetails() {
-        System.out.print("Enter course code: ");
-        String courseCode = scanner.nextLine();
-        System.out.print("Enter course category: ");
-        String category = scanner.nextLine();
-        System.out.print("Enter course name: ");
-        String name = scanner.nextLine();
+        String courseCode;
+        while (true) {
+            System.out.print("Enter course code (e.g., BACS1234, BAIT0987): ");
+            courseCode = scanner.nextLine().trim().toUpperCase();
+            if (isValidCourseCode(courseCode)) {
+                break;
+            } else {
+                System.out.println("Invalid format. Please enter a valid course code.");
+            }
+        }
+        String category;
+        while (true) {
+            System.out.print("Enter course category (e.g., FOCS, FCCI): ");
+            category = scanner.nextLine().trim().toUpperCase();
+            if (isValidCourseCategory(category)) {
+                break;
+            } else {
+                System.out.println("Invalid format. Please enter a valid course category.");
+            }
+        }
+        String name;
+        while (true) {
+            System.out.print("Enter course name: ");
+            name = scanner.nextLine().trim().toUpperCase();
+            if (!name.isEmpty()) {
+                break;
+            } else {
+                System.out.println("Name cannot be empty!");
+            }
+        }
 
         int creditHours = -1; // Initialize to a default value
         while (creditHours < 0) {
@@ -92,32 +128,71 @@ public class CourseManagementUI {
             }
         }
 
-        scanner.nextLine(); // Consume the newline left in the buffer
-        System.out.print("Enter course status: ");
-        String status = scanner.nextLine();
+        String status;
+        while (true) {
+            System.out.print("Enter course status: ");
+            status = scanner.nextLine().trim().toUpperCase();
+            if (!status.isEmpty()) {
+                break;
+            } else {
+                System.out.println("Status cannot be empty!");
+            }
+        }
 
         return new Course(courseCode, category, name, creditHours, status);
     }
 
     public Programme inputProgrammeDetails() {
-        System.out.print("Enter programme code: ");
-        String programmeCode = scanner.nextLine();
-        System.out.print("Enter programme name: ");
-        String name = scanner.nextLine();
+        String programmeCode;
+        while (true) {
+            System.out.print("Enter programme code (e.g., RISY1Y1, RSWY2S3): ");
+            programmeCode = scanner.nextLine().trim().toUpperCase();
+            if (isValidProgrammeCode(programmeCode)) {
+                break;
+            } else {
+                System.out.println("Invalid format. Please enter a valid programme code.");
+            }
+        }
+        String name;
+        while (true) {
+            System.out.print("Enter programme name: ");
+            name = scanner.nextLine().trim().toUpperCase();
+            if (!name.isEmpty()) {
+                break;
+            } else {
+                System.out.println("Name cannot be empty!");
+            }
+        }
 
         return new Programme(programmeCode, name);
     }
 
     public String inputProgrammeCode() {
-        System.out.print("Enter programme code: ");
-        String code = scanner.nextLine();
-        return code;
+        String programmeCode;
+        while (true) {
+            System.out.print("Enter programme code (e.g., RISY1Y1, RSWY2S3): ");
+            programmeCode = scanner.nextLine().trim().toUpperCase();
+            if (isValidProgrammeCode(programmeCode)) {
+                break;
+            } else {
+                System.out.println("Invalid format. Please enter a valid programme code.");
+            }
+        }
+        return programmeCode;
     }
 
     public String inputCourseCode() {
-        System.out.print("Enter course code: ");
-        String code = scanner.nextLine();
-        return code;
+        String courseCode;
+        while (true) {
+            System.out.print("Enter course code (e.g., BACS1234, BAIT0987): ");
+            courseCode = scanner.nextLine().trim().toUpperCase();
+            if (isValidCourseCode(courseCode)) {
+                break;
+            } else {
+                System.out.println("Invalid format. Please enter a valid course code.");
+            }
+        }
+        return courseCode;
     }
 
     public void displayCourseDetails(Course course) {

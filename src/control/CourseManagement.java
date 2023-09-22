@@ -7,8 +7,7 @@ package control;
 import adt.*;
 import boundary.CourseManagementUI;
 import dao.CourseDAO;
-import entity.Course;
-import entity.Programme;
+import entity.*;
 import utility.MessageUI;
 
 public class CourseManagement {
@@ -16,7 +15,7 @@ public class CourseManagement {
     private SortedArrayList<Course> courseList = new SortedArrayList<>();
     private final CourseManagementUI courseUI = new CourseManagementUI();
     private final CourseDAO courseDAO = new CourseDAO();
-    
+
     int add = 0, remove = 0, edit = 0;
 
     public CourseManagement() {
@@ -43,11 +42,11 @@ public class CourseManagement {
                 }
                 case 3 ->
                     findCourse();
-                case 4 ->{
+                case 4 -> {
                     amendCourseDetails();
                     courseUI.listAllCourses(getAllCourses());
                     edit++;
-                }   
+                }
                 case 5 ->
                     courseUI.listAllCourses(getAllCourses());
                 case 6 ->
@@ -136,7 +135,7 @@ public class CourseManagement {
             MessageUI.courseNotFoundMessage();
         }
     }
-    
+
     public Programme findProgrammeByCode(Course course, String programmeCode) {
         for (int i = 0; i < course.getProgrammes().totalNumberOfObject(); i++) {
             Programme programme = course.getProgrammes().getObject(i);
