@@ -6,13 +6,14 @@ package entity;
  */
 import adt.SortedArrayList;
 import java.io.Serializable;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Objects;
 
 public class Course implements Comparable<Course>, Serializable {
 
     private CourseInfo course;
-    private LocalDate dateAdded;
+    private LocalDateTime dateAdded;
     private SortedArrayList<Programme> programmes = new SortedArrayList<>();
 
     public Course() {
@@ -21,7 +22,7 @@ public class Course implements Comparable<Course>, Serializable {
 
     public Course(String courseCode, String category, String name, int creditHours, String status) {
         this.course = new CourseInfo(courseCode, category, name, creditHours, status);
-        this.dateAdded = LocalDate.now();
+        this.dateAdded = LocalDateTime.now();
         this.programmes = new SortedArrayList<>();
     }
 
@@ -58,11 +59,11 @@ public class Course implements Comparable<Course>, Serializable {
         this.course = course;
     }
 
-    public LocalDate getDateAdded() {
+    public LocalDateTime getDateAdded() {
         return dateAdded;
     }
 
-    public void setDateAdded(LocalDate dateAdded) {
+    public void setDateAdded(LocalDateTime dateAdded) {
         this.dateAdded = dateAdded;
     }
 
@@ -95,6 +96,8 @@ public class Course implements Comparable<Course>, Serializable {
 
     @Override
     public String toString() {
-        return String.format("%-100s %-15s %-15d", course.toString(), dateAdded, getProgrammeCount());
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy hh:mm");
+        String formattedDate = dateAdded.format(formatter);
+        return String.format("%-100s %-25s %-15d", course.toString(), formattedDate, getProgrammeCount());
     }
 }

@@ -32,8 +32,8 @@ public class CourseManagementUI {
         int choice = -1;
         try {
             choice = scanner.nextInt();
-            if (choice < 0 || choice > 8) {
-                System.out.println("Invalid choice. Please enter a number between 0 and 8.");
+            if (choice < 0 || choice > 9) {
+                System.out.println("Invalid choice. Please enter a number between 0 and 9.");
             }
         } catch (InputMismatchException e) {
             System.out.println("Invalid input. Please enter a valid number.");
@@ -55,11 +55,11 @@ public class CourseManagementUI {
     }
 
     public void listAllCourses(String outputStr) {
-        printLine(130);
-        System.out.printf("%-10s %-15s %-40s %-15s %-15s %-15s %-15s\n", "Course Code", "Category", "Name", "Credit Hours", "Status", "Date Added", "Programmes");
-        printLine(130);
+        printLine(137);
+        System.out.printf("%-10s %-15s %-40s %-15s %-15s %-25s %-15s\n", "Course Code", "Category", "Name", "Credit Hours", "Status", "Date Added", "Programmes");
+        printLine(137);
         System.out.print(outputStr);
-        printLine(130);
+        printLine(137);
     }
 
     public void listAllProgrammesByCourse(String outputStr) {
@@ -118,7 +118,7 @@ public class CourseManagementUI {
         while (creditHours < 0) {
             try {
                 System.out.print("Enter course credit hours: ");
-                creditHours = scanner.nextInt();
+                creditHours = Integer.parseInt(scanner.nextLine());
                 if (creditHours < 0) {
                     System.out.println("Credit hours must be a non-negative integer.");
                 }
@@ -205,23 +205,18 @@ public class CourseManagementUI {
         System.out.println(message);
     }
 
-    public void displayCourseManagementReport(int totalCourses, int add, int remove, int edit) {
-        clearScreen();
-
-        System.out.println("=== Course Management Report ===");
+    public void displayReport(int totalCourses, Course mostProgrammesCourse, Course fewestProgrammesCourse, Course recentAddedCourse) {
+        printLine(70);
+        System.out.println("\t\tCourse Management Report");
+        printLine(70);
         System.out.println("Total Number of Courses             >> " + totalCourses);
-        System.out.println("Total Number of Programmes Added    >> " + add);
-        System.out.println("Total Number of Programmes Deleted  >> " + remove);
-        System.out.println("Total Number of Programmes Edited   >> " + edit);
-        System.out.println("================================");
+        System.out.println("The course with most programmes     >> " + mostProgrammesCourse.getCourseInfo().getCourseCode() + "\t" + mostProgrammesCourse.getProgrammeCount() + " programme(s)");
+        System.out.println("The course with fewest programmes   >> " + fewestProgrammesCourse.getCourseInfo().getCourseCode() + "\t" + fewestProgrammesCourse.getProgrammeCount() + " programme(s)");
+        System.out.println("The recent added course             >> " + recentAddedCourse.getCourseInfo().getCourseCode() + "\t" + recentAddedCourse.getCourseInfo().getName());
+        printLine(70);
 
         // Wait for user input before proceeding
         System.out.print("Enter any value to proceed -> ");
         scanner.next();
-    }
-
-    private void clearScreen() {
-        System.out.print("\033[H\033[2J");
-        System.out.flush();
     }
 }

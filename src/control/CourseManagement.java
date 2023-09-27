@@ -8,6 +8,7 @@ import adt.*;
 import boundary.CourseManagementUI;
 import dao.CourseDAO;
 import entity.*;
+import java.time.LocalDateTime;
 import utility.MessageUI;
 
 public class CourseManagement {
@@ -15,8 +16,6 @@ public class CourseManagement {
     private SortedArrayList<Course> courseList = new SortedArrayList<>();
     private final CourseManagementUI courseUI = new CourseManagementUI();
     private final CourseDAO courseDAO = new CourseDAO();
-
-    int add = 0, remove = 0, edit = 0;
 
     public CourseManagement() {
         courseList = courseDAO.retrieveFromFile();
@@ -33,19 +32,16 @@ public class CourseManagement {
                     addNewCourse();
                     courseUI.listAllCourses(getAllCourses());
                     courseUI.displayMessage("New course added.");
-                    add++;
                 }
                 case 2 -> {
                     removeCourse();
                     courseUI.listAllCourses(getAllCourses());
-                    remove++;
                 }
                 case 3 ->
                     findCourse();
                 case 4 -> {
                     amendCourseDetails();
                     courseUI.listAllCourses(getAllCourses());
-                    edit++;
                 }
                 case 5 ->
                     courseUI.listAllCourses(getAllCourses());
@@ -56,7 +52,7 @@ public class CourseManagement {
                 case 8 ->
                     listAllProgrammesByCourse();
                 case 9 ->
-                    generateReports();
+                    displayReports();
                 default ->
                     MessageUI.displayInvalidChoiceMessage();
             }
@@ -146,10 +142,13 @@ public class CourseManagement {
         return null;
     }
 
-    public void generateReports() {
+    public void displayReports() {
         courseUI.listAllCourses(getAllCourses());
         int totalCourse = courseList.totalNumberOfObject();
-        courseUI.displayCourseManagementReport(totalCourse, add, remove, edit);
+        Course mostProgrammesCourse = getMostProgrammesByCourse();
+        Course fewestProgrammesCourse = getFewestProgrammesByCourse();
+        Course recentAddedCourse = getRecentAddedCourse();
+        courseUI.displayReport(totalCourse, mostProgrammesCourse, fewestProgrammesCourse, recentAddedCourse);
     }
 
     // Find Course By Code can reuse in update details also
@@ -170,6 +169,68 @@ public class CourseManagement {
             outputStr.append(course.toString()).append("\n");
         }
         return outputStr.toString();
+    }
+
+    public Course getMostProgrammesByCourse() {
+        if (courseList.isListEmpty()) {
+            return null; // No courses in the list
+        }
+
+        Course mostProgramsCourse = null;
+        int maxProgramCount = -1;
+
+        for (int i = 0; i < courseList.totalNumberOfObject(); i++) {
+            Course course = courseList.getObject(i);
+            int programCount = course.getProgrammeCount();
+
+            if (programCount > maxProgramCount) {
+                maxProgramCount = programCount;
+                mostProgramsCourse = course;
+            }
+        }
+
+        return mostProgramsCourse;
+    }
+
+    public Course getFewestProgrammesByCourse() {
+        if (courseList.isListEmpty()) {
+            return null; // No courses in the list
+        }
+
+        Course fewestProgramsCourse = null;
+        int minProgramCount = Integer.MAX_VALUE; // Set to a high initial value
+
+        for (int i = 0; i < courseList.totalNumberOfObject(); i++) {
+            Course course = courseList.getObject(i);
+            int programCount = course.getProgrammeCount();
+
+            if (programCount < minProgramCount) { // Check for fewer programs
+                minProgramCount = programCount;
+                fewestProgramsCourse = course;
+            }
+        }
+
+        return fewestProgramsCourse;
+    }
+
+    public Course getRecentAddedCourse() {
+        if (courseList.isListEmpty()) {
+            return null; // No courses in the list
+        }
+
+        Course recentCourse = null;
+        LocalDateTime maxDateTime = LocalDateTime.MIN; // Initialize maxDateTime to a minimum value
+
+        for (int i = 0; i < courseList.totalNumberOfObject(); i++) {
+            Course course = courseList.getObject(i);
+            LocalDateTime addedDateTime = course.getDateAdded(); // Assuming you have a method to parse the date string
+
+            if (addedDateTime.isAfter(maxDateTime)) {
+                maxDateTime = addedDateTime; // Update maxDateTime if a more recent date is found
+                recentCourse = course; // Clear the list by creating a new one
+            }
+        }
+        return recentCourse;
     }
 
     public void listAllProgrammesByCourse() {
